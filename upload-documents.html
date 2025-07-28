@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Documents</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0f4f8;
+      padding: 30px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    h2, h3 {
+      text-align: center;
+      color: #333;
+    }
+    .instructions {
+      margin-bottom: 30px;
+      background: #e8f0fe;
+      border-left: 5px solid #4285f4;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .instructions ul {
+      padding-left: 18px;
+    }
+    .form-grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      flex: 1 1 100%;
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+    }
+    select, input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .upload-btn {
+      margin-top: 6px;
+      padding: 8px 12px;
+      background: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .upload-btn:hover {
+      background: #3367d6;
+    }
+    .section-divider {
+      border-top: 2px solid #ddd;
+      margin: 30px 0 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Upload Documents</h2>
+
+<div class="instructions">
+  <h4><strong>📌 Important Instructions / महत्वपूर्ण निर्देश</strong></h4>
+  <ul>
+    <li>
+      All uploaded documents must be in <strong>JPG or JPEG format</strong> only, and each file size should be between <strong>200 KB to 500 KB</strong>.
+      <br><span style="color: #666;">सभी दस्तावेज केवल JPG या JPEG फॉर्मेट में होने चाहिए और प्रत्येक फाइल का आकार <strong>200KB से 500KB</strong> के बीच होना अनिवार्य है।</span>
+    </li>
+    <li>
+      Upload only the documents relevant to your class and year.
+      <br><span style="color: #666;">केवल अपनी कक्षा और वर्ष से संबंधित दस्तावेज़ ही अपलोड करें।</span>
+    </li>
+    <li>
+      Students are required to upload marksheets of all previous qualifying exams up to the current year.
+      <br><span style="color: #666;">छात्रों को वर्तमान कक्षा तक की सभी पिछली योग्यतापूर्वक परीक्षाओं की मार्कशीट अपलोड करना अनिवार्य है।</span>
+    </li>
+    <li>
+      Form-6 must be <strong>clearly and neatly filled</strong> before uploading.
+      <br><span style="color: #666;">फॉर्म-6 को अपलोड करने से पहले <strong>साफ़ और स्पष्ट रूप से</strong> भरना आवश्यक है।</span>
+    </li>
+    <li>
+      Upload buttons are provided separately for each field; please upload the correct document at the correct place.
+      <br><span style="color: #666;">प्रत्येक फ़ील्ड के लिए अलग-अलग अपलोड बटन दिए गए हैं; कृपया सही दस्तावेज़ उचित स्थान पर ही अपलोड करें।</span>
+    </li>
+    <li>
+      Oversized files will be automatically rejected; ensure file size is within the limit.
+      <br><span style="color: #666;">यदि फाइल का आकार निर्धारित सीमा से अधिक हुआ तो उसे अस्वीकार कर दिया जाएगा। कृपया सुनिश्चित करें कि फाइल साइज मान्य सीमा में हो।</span>
+    </li>
+  </ul>
+</div>
+
+
+    <!-- Fixed Documents Upload -->
+    <h3>Fixed Documents Upload</h3>
+    <div id="fixedDocuments"></div>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Marksheet Upload Section -->
+    <h3>Marksheet Upload Section</h3>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Select Class</label>
+        <select id="selectClass">
+          <option value="">Select</option>
+          <option value="BA">BA</option>
+          <option value="BCOM">BCOM</option>
+          <option value="BSC MATHS">BSC MATHS</option>
+          <option value="BSC BIO">BSC BIO</option>
+          <option value="BSC PHYSICAL EDUCATION">BSC PHYSICAL EDUCATION</option>
+          <option value="LLB">LLB</option>
+          <option value="MA">MA</option>
+          <option value="MSC">MSC</option>
+          <option value="MCOM">MCOM</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Select Year</label>
+        <select id="selectYear">
+          <option value="">Select</option>
+          <option value="I">I</option>
+          <option value="II">II</option>
+          <option value="III">III</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="marksheetFields"></div>
+  </div>
+
+  <script>
+    const selectClass = document.getElementById("selectClass");
+    const selectYear = document.getElementById("selectYear");
+    const marksheetFields = document.getElementById("marksheetFields");
+    const fixedDocuments = document.getElementById("fixedDocuments");
+
+    const fixedDocs = [
+      "Scholarship Form (Complete)",
+      "Income Certificate",
+      "Verification of Income Certificate",
+      "Domicile Certificate",
+      "Verification of Domicile Certificate",
+      "Caste Certificate (if applicable)",
+      "Yellow Slip and College ID",
+      "Bank Passbook (First Page Only)",
+      "Aadhar Card",
+      "Form 6"
+    ];
+
+    function createUploadField(label) {
+      return `
+        <div class="form-group">
+          <label>${label}</label>
+          <input type="file" accept=".jpg,.jpeg" required>
+          <button type="button" class="upload-btn">Upload</button>
+        </div>`;
+    }
+
+    function loadFixedFields() {
+      fixedDocuments.innerHTML = "";
+      fixedDocs.forEach(doc => {
+        fixedDocuments.innerHTML += createUploadField(doc);
+      });
+    }
+
+    function loadMarksheetFields() {
+      const cls = selectClass.value;
+      const year = selectYear.value;
+      marksheetFields.innerHTML = "";
+
+      if (!cls || !year) return;
+
+      const uploads = [];
+      const add = label => uploads.push(createUploadField(label));
+
+      if (["BA", "BCOM", "BSC MATHS", "BSC BIO"].includes(cls)) {
+        if (year === "I") {
+          add("10th Marksheet");
+          add("12th Marksheet");
+        } else if (year === "II") {
+          add("10th Marksheet");
+          add("12th Marksheet");
+          add("1st Sem Marksheet");
+          add("2nd Sem Marksheet");
+        } else if (year === "III") {
+          add("10th Marksheet");
+          add("12th Marksheet");
+          add("1st Sem Marksheet");
+          add("2nd Sem Marksheet");
+          add("3rd Sem Marksheet");
+          add("4th Sem Marksheet");
+        }
+      } else if (["MA", "MSC", "MCOM"].includes(cls)) {
+        if (year === "I") {
+          add("10th Marksheet");
+          add("12th Marksheet");
+          for (let i = 1; i <= 6; i++) add(`UG ${i} Sem Marksheet`);
+        } else if (year === "II") {
+          add("10th Marksheet");
+          add("12th Marksheet");
+          for (let i = 1; i <= 6; i++) add(`UG ${i} Sem Marksheet`);
+          add("PG 1st Sem Marksheet");
+          add("PG 2nd Sem Marksheet");
+        } else {
+          marksheetFields.innerHTML = "<p style='color:red'>Only I and II Year allowed for PG courses.</p>";
+          return;
+        }
+      } else if (cls === "LLB") {
+        add("10th Marksheet");
+        add("12th Marksheet");
+        for (let i = 1; i <= 6; i++) add(`UG ${i} Sem Marksheet`);
+        if (year === "II") {
+          add("LLB 1st Sem Marksheet");
+          add("LLB 2nd Sem Marksheet");
+        } else if (year === "III") {
+          for (let i = 1; i <= 4; i++) add(`LLB ${i} Sem Marksheet`);
+        }
+      } else if (cls === "BSC PHYSICAL EDUCATION") {
+        if (year === "I") {
+          add("10th Marksheet");
+          add("12th Marksheet");
+        } else if (year === "II") {
+          add("10th Marksheet");
+          add("12th Marksheet");
+          add("1st Year Marksheet");
+        } else if (year === "III") {
+          add("10th Marksheet");
+          add("12th Marksheet");
+          add("1st Year Marksheet");
+          add("2nd Year Marksheet");
+        }
+      }
+
+      marksheetFields.innerHTML = uploads.join("");
+    }
+
+    selectClass.addEventListener("change", loadMarksheetFields);
+    selectYear.addEventListener("change", loadMarksheetFields);
+
+    // Load default fixed fields
+    loadFixedFields();
+  </script>
+</body>
+</html>
+<!-- Firebase SDKs (Copy-paste this) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
+
+<script>
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCZ4K8niOx0vl3Z_8GS8ip7NZTldOu283k",
+    authDomain: "scholarship-submission-64ce9.firebaseapp.com",
+    projectId: "scholarship-submission-64ce9",
+    storageBucket: "scholarship-submission-64ce9.appspot.com", // ✅ correct bucket
+    messagingSenderId: "589376981483",
+    appId: "1:589376981483:web:b224ae3db1ef51f669b1ae"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Initialize Firestore and Storage for use later
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+</script>

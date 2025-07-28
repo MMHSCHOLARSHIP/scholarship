@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scholarship Submission Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: 'Poppins',sans-serif; background: linear-gradient(to right,#e0c3fc,#8ec5fc); display: flex; justify-content: center; padding: 30px;}
+    .container { background: #fff; padding: 30px; border-radius: 12px; max-width: 960px; width: 100%; box-shadow: 0 15px 34px rgba(0,0,0,0.16);}
+    h2 { text-align:center; margin-bottom: 28px;}
+    .form-section { margin-bottom: 23px;}
+    .form-section h3 { border-bottom:2px solid #dedede; color:#444; margin-bottom:13px; font-weight: 600; padding-bottom:6px;}
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 19px;}
+    .form-grid input, .form-grid select { width:100%; padding:12px 14px; font-size:14px; border-radius:6px; border: 1px solid #ccc;}
+    .form-grid input:focus, .form-grid select:focus { border-color:#007bff; box-shadow:0 0 6px #007bff44; outline: none;}
+    button { width:100%; padding:13px; font-size:16px; border: none; border-radius: 6px; background:#007bff; color:white; font-weight:600; cursor: pointer; margin-top:20px; transition:0.2s;}
+    button:disabled { opacity:0.6; cursor: not-allowed;}
+    button:hover:not(:disabled) { background:#0056b3;}
+    .error-msg { color: red; font-size: 15px; grid-column: 1/-1;}
+    .acad-row { display: flex; gap: 27px; align-items:center; margin-bottom:15px; flex-wrap: wrap;}
+    .acad-row > div,.acad-row > span { min-width:140px;}
+    .acad-row label { font-size:14.3px; display:block; margin-bottom:5px;}
+    .acad-row input,.acad-row select { width:100%; padding:11px 11px;}
+    .acad-row .sem-label {min-width:73px; font-weight:600; font-size:17px;}
+    .section-note {background-color:#e3ebfd;color:#222;padding:9px 18px;margin-bottom:13px; border-radius:7px;font-size:15px; font-weight:500;}
+    @media (max-width: 900px) { .form-grid { grid-template-columns: 1fr;} }
+    @media (max-width: 650px) { .acad-row {gap:12px;} }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Scholarship Form Submission</h2>
+  <form id="studentForm" autocomplete="off">
+    <!-- Class, Subject, Year, Form Type, Reason -->
+    <div class="form-section">
+      <div class="form-grid">
+        <div style="display:flex;flex-direction:column;">
+          <label for="studentClass">Class</label>
+          <select id="studentClass" required onchange="handleClassChange(this.value)">
+            <option value="">-- Select Class --</option>
+            <option value="BA">BA</option><option value="BCom">BCom</option>
+            <option value="BSc Maths">BSc Maths</option><option value="BSc Bio">BSc Bio</option>
+            <option value="BSc Physical Education">BSc Physical Education</option>
+            <option value="LLB">LLB</option><option value="MA">MA</option>
+            <option value="MSc">MSc</option><option value="MCom">MCom</option>
+          </select>
+        </div>
+        <div style="display:flex;flex-direction:column;" id="subjectField" style="display:none;">
+          <label for="subject">Subject</label>
+          <select id="subject" name="subject"></select>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <label for="year">Year</label>
+          <select id="year" required>
+            <option value="">Select Year</option>
+            <option value="1st">1st Year</option>
+            <option value="2nd">2nd Year</option>
+            <option value="3rd">3rd Year</option>
+          </select>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <label for="formType">Form Type</label>
+          <select id="formType" required>
+            <option value="">Form Type</option>
+            <option value="New">New</option>
+            <option value="Renew">Renew</option>
+          </select>
+        </div>
+        <div style="display:flex;flex-direction:column;" id="reasonSection" style="display:none;">
+          <label for="reason">Reason</label>
+          <select id="reason">
+            <option value="">Select Reason</option>
+            <option value="Missed last date">Missed Last Date</option>
+            <option value="Attendance short">Attendance Short</option>
+            <option value="Result not declared">Result Not Declared</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- Basic Info -->
+    <div class="form-section">
+      <h3>Basic Information</h3>
+      <div class="form-grid">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="text" id="scholarshipNo" placeholder="Scholarship Registration No." maxlength="15" required>
+        <input type="text" id="fatherName" placeholder="Father's Name" required>
+        <input type="text" id="motherName" placeholder="Mother's Name" required>
+        <select id="category" required>
+          <option value="">Category</option>
+          <option value="General">General</option>
+          <option value="OBC">OBC</option>
+          <option value="SC/ST">SC/ST</option>
+          <option value="Minority">Minority</option>
+        </select>
+        <input type="tel" id="mobile" placeholder="Mobile Number" maxlength="10" required>
+        <div style="display:flex;flex-direction:column;">
+          <label for="admissionFirstYear">Admission Date in First Year</label>
+          <input type="date" id="admissionFirstYear" required>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <label for="admissionCurrentYear">Admission Date in Current Year</label>
+          <input type="date" id="admissionCurrentYear" required>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div id="enrollmentSection" style="width:100%;display:none;">
+          <input type="text" id="enrollmentNo" placeholder="Enrollment Number / University Registration No.">
+        </div>
+        <select id="attendance" required>
+          <option value="">Attendance > 75%</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Academic Details -->
+    <div class="form-section" id="academicSection" style="display:none;">
+      <h3 id="academicHeading">Academic Details</h3>
+      <div id="academicNote" style="display:none;" class="section-note"></div>
+      <div id="academicFields"></div>
+      <div id="notEligibleMsg" class="error-msg" style="display:none; margin-top:8px; font-weight:bold;"></div>
+    </div>
+
+    <!-- Income Certificate Section -->
+    <div class="form-section" id="incomeSection">
+      <h3>Income Certificate Details</h3>
+      <div class="form-grid">
+        <input type="text" id="incomeCertNo" placeholder="Income Certificate Number" required>
+        <input type="date" id="incomeCertDate" required>
+        <input type="number" id="annualIncome" placeholder="Annual Family Income (in ₹)" required>
+        <select id="siblingScholarship" required>
+          <option value="">Any sibling applying this year?</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+      <div class="form-grid" id="siblingDetails" style="display:none;">
+        <input type="text" id="siblingScholarNo" placeholder="Sibling's Scholarship Reg. No.">
+        <input type="text" id="siblingCollege" placeholder="Sibling's College Name">
+      </div>
+    </div>
+    <button type="submit" id="formSubmitBtn">Save & Continue</button>
+  </form>
+</div>
+<script>
+const subjectField = document.getElementById('subjectField');
+const subjectDropdown = document.getElementById('subject');
+const maSubjects = ["Drawing & Painting", "English", "Economics", "Geography", "History", "Hindi", "Maths", "Philosophy", "Political Science", "Sanskrit", "Sociology"];
+const mscSubjects = ["Botany", "Chemistry", "Maths", "Physics", "Zoology"];
+function handleClassChange(selectedClass) {
+  const sf = document.getElementById('subjectField');
+  if (selectedClass === "MA") { sf.style.display = "block"; showSubjectDropdown(maSubjects);}
+  else if (selectedClass === "MSc") { sf.style.display = "block"; showSubjectDropdown(mscSubjects);}
+  else { sf.style.display = "none"; subjectDropdown.innerHTML = ""; }
+}
+function showSubjectDropdown(subjects) {
+  subjectDropdown.innerHTML = '<option value="">-- Select Subject --</option>';
+  subjects.forEach(sub => {
+    const option = document.createElement("option");
+    option.value = sub; option.textContent = sub;
+    subjectDropdown.appendChild(option);
+  });
+}
+document.getElementById("year").addEventListener("change", function(){
+  handleYearChange();
+  renderAcademicSection(document.getElementById('studentClass').value, this.value);
+});
+document.getElementById('studentClass').addEventListener("change", function(){
+  renderAcademicSection(this.value, document.getElementById('year').value);
+});
+function handleYearChange() {
+  const year = document.getElementById("year").value;
+  const formType = document.getElementById("formType");
+  const enrollmentSection = document.getElementById('enrollmentSection');
+  document.getElementById("admissionCurrentYear").readOnly = false;
+  enrollmentSection.style.display = year ? "block" : "none";
+  document.getElementById('enrollmentNo').placeholder = year === "1st" ? "University Registration No." : "Enrollment Number";
+  if(year === "1st") { formType.value = "New"; formType.disabled = true; }
+  else { formType.disabled = false; }
+  document.getElementById("reasonSection").style.display = 
+    (["2nd","3rd"].includes(year) && formType.value==="New") ? "block" : "none";
+}
+document.getElementById("formType").addEventListener("change", function(){
+  const year = document.getElementById("year").value;
+  document.getElementById("reasonSection").style.display = 
+    (["2nd","3rd"].includes(year) && this.value==="New") ? "block" : "none";
+});
+
+function renderAcademicSection(classVal, yearVal) {
+  const section = document.getElementById("academicSection");
+  const fields = document.getElementById("academicFields");
+  const note = document.getElementById("academicNote");
+  const notEligibleMsg = document.getElementById("notEligibleMsg");
+  const submitBtn = document.getElementById("formSubmitBtn");
+  section.style.display = "none";
+  fields.innerHTML = "";
+  note.style.display = "none";
+  notEligibleMsg.style.display = "none";
+  submitBtn.disabled = false;
+
+  // ------------- MA, MSc, MCom, LLB --------------
+  const pgClasses = ["MA","MSc","MCom","LLB"];
+  if(pgClasses.includes(classVal) && ["1st","2nd","3rd"].includes(yearVal)) {
+    section.style.display = "block";
+    notEligibleMsg.style.display = "none";
+    note.style.display = "none";
+    if(yearVal === "1st") {
+      fields.innerHTML = `
+        <div class="acad-row">
+          <div>
+            <label for="gradUniversity">Graduation University</label>
+            <input type="text" id="gradUniversity" name="gradUniversity" required>
+          </div>
+          <div>
+            <label for="pgTotalMarks">Total Marks</label>
+            <input type="number" id="pgTotalMarks" name="pgTotalMarks" required min="1">
+          </div>
+          <div>
+            <label for="pgObtMarks">Marks (Obtained)</label>
+            <input type="number" id="pgObtMarks" name="pgObtMarks" required min="0">
+          </div>
+        </div>
+      `;
+      return;
+    }
+    let sems = [];
+    if(yearVal === "2nd") sems = [1,2];
+    if(yearVal === "3rd") sems = [3,4];
+    fields.innerHTML = sems.map(semNo => `
+      <div class="acad-row">
+        <span class="sem-label">${semNo} Sem</span>
+        <div>
+          <label for="sem${semNo}Obt">Marks (Obtained)</label>
+          <input type="number" id="sem${semNo}Obt" name="sem${semNo}Obt" min="0" required>
+        </div>
+        <div>
+          <label for="sem${semNo}Total">Total Marks</label>
+          <input type="number" id="sem${semNo}Total" name="sem${semNo}Total" min="1" required>
+        </div>
+      </div>
+    `).join('');
+    return;
+  }
+
+  // -------- BSc Physical Education (Annual) ---------
+  if (classVal === "BSc Physical Education" && ["1st","2nd","3rd"].includes(yearVal)) {
+    section.style.display = "block";
+    note.style.display = "none";
+    notEligibleMsg.style.display = "none";
+    if (yearVal === "1st") {
+      fields.innerHTML = `
+        <div class="acad-row">
+          <div>
+            <label for="interBoard">Intermediate Board</label>
+            <select id="interBoard" name="interBoard" required>
+              <option value="">Select</option>
+              <option value="CBSE">CBSE</option>
+              <option value="ICSE">ICSE</option>
+              <option value="UP BOARD">UP BOARD</option>
+              <option value="OTHER">OTHER</option>
+            </select>
+          </div>
+          <div>
+            <label for="passingYear">Passing Year</label>
+            <select id="passingYear" name="passingYear" required>
+              <option value="">Select</option>
+              <option>2025</option><option>2024</option><option>2023</option><option>2022</option>
+            </select>
+          </div>
+          <div>
+            <label for="interTotalMarks">Total Marks</label>
+            <input type="number" id="interTotalMarks" name="interTotalMarks" required min="1">
+          </div>
+          <div>
+            <label for="interObtMarks">Marks (Obtained)</label>
+            <input type="number" id="interObtMarks" name="interObtMarks" required min="0">
+          </div>
+        </div>
+      `;
+      return;
+    }
+    if (yearVal === "2nd") {
+      fields.innerHTML = `
+        <div class="acad-row">
+          <div style="flex:0 0 140px;"><strong>1st Year</strong></div>
+          <div>
+            <label for="firstYearObtMarks">Marks (Obtained)</label>
+            <input type="number" id="firstYearObtMarks" name="firstYearObtMarks" required min="0">
+          </div>
+          <div>
+            <label for="firstYearTotalMarks">Total Marks</label>
+            <input type="number" id="firstYearTotalMarks" name="firstYearTotalMarks" required min="1">
+          </div>
+        </div>
+      `;
+      return;
+    }
+    if (yearVal === "3rd") {
+      fields.innerHTML = `
+        <div class="acad-row">
+          <div style="flex:0 0 140px;"><strong>2nd Year</strong></div>
+          <div>
+            <label for="secondYearObtMarks">Marks (Obtained)</label>
+            <input type="number" id="secondYearObtMarks" name="secondYearObtMarks" required min="0">
+          </div>
+          <div>
+            <label for="secondYearTotalMarks">Total Marks</label>
+            <input type="number" id="secondYearTotalMarks" name="secondYearTotalMarks" required min="1">
+          </div>
+        </div>
+      `;
+      return;
+    }
+    return;
+  }
+
+  // ----------- BA/BCom/BSc Maths/Bio ("semester"/eligibility logic + bilingual note) -----------
+  const semesterClasses = ["BA", "BCom", "BSc Maths", "BSc Bio"];
+  if (!semesterClasses.includes(classVal) || !["1st", "2nd", "3rd"].includes(yearVal)) return;
+  section.style.display = "block";
+  // 2nd/3rd year पे bilingual note
+  if (yearVal === "2nd" || yearVal === "3rd") {
+    note.style.display = "block";
+    note.innerHTML = `नोट: यदि किसी भी सेमेस्टर का रिजल्ट घोषित नहीं हुआ है या गत वर्ष के अंक पूरे नहीं हैं, तो कृपया फॉर्म जमा न करें, अन्यथा आवेदन निरस्त कर दिया जाएगा।<br>
+    Note: If the result of any semester is not declared or last year marks are not complete, please do not submit the form, otherwise the application will be rejected.`;
+  } else {
+    note.style.display = "none";
+  }
+
+  if (yearVal === "1st") {
+    fields.innerHTML = `
+      <div class="acad-row">
+        <div>
+          <label for="interBoard">Intermediate Board</label>
+          <select id="interBoard" name="interBoard" required>
+            <option value="">Select</option>
+            <option value="CBSE">CBSE</option>
+            <option value="ICSE">ICSE</option>
+            <option value="UP BOARD">UP BOARD</option>
+            <option value="OTHER">OTHER</option>
+          </select>
+        </div>
+        <div>
+          <label for="passingYear">Passing Year</label>
+          <select id="passingYear" name="passingYear" required>
+            <option value="">Select</option>
+            <option>2025</option><option>2024</option><option>2023</option><option>2022</option>
+          </select>
+        </div>
+        <div>
+          <label for="interTotalMarks">Total Marks</label>
+          <input type="number" id="interTotalMarks" name="interTotalMarks" required min="1">
+        </div>
+        <div>
+          <label for="interObtMarks">Marks (Obtained)</label>
+          <input type="number" id="interObtMarks" name="interObtMarks" required min="0">
+        </div>
+      </div>
+    `;
+    return;
+  }
+  // 2nd/3rd Year Semester Fields rendering, eligibility rules
+  let semList = (yearVal === "2nd") ? [1, 2] : [3, 4];
+  fields.innerHTML = semList.map(semNo => `
+    <div class="acad-row">
+      <span class="sem-label">${semNo} Sem</span>
+      <div>
+        <label for="sem${semNo}Result">Result Declared</label>
+        <select id="sem${semNo}Result" required>
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+      <div>
+        <label for="sem${semNo}Marks">Marks (Obtained)</label>
+        <input type="number" id="sem${semNo}Marks" placeholder="Marks (Obtained)" min="0" required disabled>
+      </div>
+      <div>
+        <label for="sem${semNo}Total">Total Marks</label>
+        <input type="number" id="sem${semNo}Total" placeholder="Total Marks" min="1" required disabled>
+      </div>
+    </div>
+  `).join('');
+
+  // Eligibility check setup
+  semList.forEach(semNo => {
+    const resSel = document.getElementById(`sem${semNo}Result`);
+    const marksInp = document.getElementById(`sem${semNo}Marks`);
+    const totalInp = document.getElementById(`sem${semNo}Total`);
+    resSel.addEventListener("change", function () {
+      const yes = (this.value === "Yes");
+      marksInp.disabled = !yes;
+      marksInp.required = yes;
+      totalInp.disabled = !yes;
+      totalInp.required = yes;
+      checkEligibility(semList);
+    });
+  });
+  checkEligibility(semList);
+
+  function checkEligibility(semesters) {
+    const results = semesters.map(semNo => document.getElementById(`sem${semNo}Result`).value);
+    // (1) दोनों No हों: गलत
+    if(results.every(val => val === "No")) {
+      notEligibleMsg.style.display = "block";
+      notEligibleMsg.innerText = "You are not eligible to fill this form";
+      submitBtn.disabled = true;
+      return;
+    }
+    // (2) ऊपर Yes, नीचे No: गलत
+    if(results[0] === "Yes" && results[1] === "No") {
+      notEligibleMsg.style.display = "block";
+      notEligibleMsg.innerText = "You are not eligible to fill this form";
+      submitBtn.disabled = true;
+      return;
+    }
+    // (3) दोनों Yes: सही
+    if(results.every(val => val === "Yes")) {
+      notEligibleMsg.style.display = "none";
+      submitBtn.disabled = false;
+      return;
+    }
+    // (4) कोई एक blank या कोई aur incompletion: अभी allow न करें
+    notEligibleMsg.style.display = "block";
+    notEligibleMsg.innerText = "You are not eligible to fill this form";
+    submitBtn.disabled = true;
+  }
+}
+// Sibling fields
+document.getElementById("siblingScholarship").addEventListener("change", function () {
+  document.getElementById("siblingDetails").style.display = this.value === "Yes" ? "grid" : "none";
+});
+document.getElementById("incomeCertDate").addEventListener("change", function () {
+  if (!this.value) return;
+  const selectedDate = new Date(this.value);
+  let minDate = new Date("2022-01-01");
+  if (selectedDate < minDate) {
+    alert(`Income Certificate Date must be after ${minDate.toLocaleDateString()}`); this.value = "";
+  }
+});
+document.getElementById("studentForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  alert("Form validated & saved! (Firebase save logic yahan lagayen)");
+  // window.location.href = "upload-documents.html";
+});
+</script>
+</body>
+</html>

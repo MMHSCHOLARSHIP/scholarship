@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scholarship Form Instructions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 30px;
+      line-height: 1.6;
+    }
+
+    .container {
+      background: white;
+      padding: 25px;
+      max-width: 800px;
+      margin: auto;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    ul {
+      margin-top: 20px;
+    }
+
+    button {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 30px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #004999;
+    }
+
+    .lang {
+      font-weight: bold;
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Scholarship Submission Instructions / छात्रवृत्ति जमा करने के निर्देश</h1>
+
+    <div class="lang">📌 English:</div>
+    <ul>
+      <li>This portal is for students of our college who have filled the UP Government Scholarship form.</li>
+      <li>Students must upload a scanned copy (JPG/JPEG, max 500KB) of the completed form and all required documents.</li>
+      <li>Each student will submit details and upload documents in the next steps.</li>
+      <li>No hard copy submission is required in the college.</li>
+      <li>Please ensure all documents are clear and as per format.</li>
+    </ul>
+
+    <div class="lang">📌 हिन्दी:</div>
+    <ul>
+      <li>यह पोर्टल केवल उन छात्रों के लिए है जिन्होंने यूपी सरकार की छात्रवृत्ति फॉर्म भरा है।</li>
+      <li>छात्रों को भरे हुए फॉर्म और सभी आवश्यक दस्तावेजों की स्कैन कॉपी (JPG/JPEG, अधिकतम 500KB) अपलोड करनी होगी।</li>
+      <li>हर छात्र अगले स्टेप्स में अपनी जानकारी भरकर दस्तावेज अपलोड करेगा।</li>
+      <li>कॉलेज में किसी भी हार्ड कॉपी की आवश्यकता नहीं है।</li>
+      <li>सभी दस्तावेज स्पष्ट एवं सही फॉर्मेट में होने चाहिए।</li>
+    </ul>
+
+    <button onclick="window.location.href='dashboard.html'">Proceed / आगे बढ़ें</button>
+  </div>
+
+</body>
+</html>
+<!-- Firebase SDKs (Copy-paste this) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
+
+<script>
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCZ4K8niOx0vl3Z_8GS8ip7NZTldOu283k",
+    authDomain: "scholarship-submission-64ce9.firebaseapp.com",
+    projectId: "scholarship-submission-64ce9",
+    storageBucket: "scholarship-submission-64ce9.appspot.com", // ✅ correct bucket
+    messagingSenderId: "589376981483",
+    appId: "1:589376981483:web:b224ae3db1ef51f669b1ae"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Initialize Firestore and Storage for use later
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+</script>
