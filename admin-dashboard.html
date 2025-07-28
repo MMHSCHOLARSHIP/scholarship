@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard – Student Documents ZIP</title>
+  <!-- SheetJS for Excel export -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- JSZip + FileSaver -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f8ff; padding:40px;}
+    h1 { text-align:center; margin-bottom:24px;}
+    .toolbar { margin-bottom:18px;}
+    .toolbar select, .toolbar button { padding:7px 9px; font-size:15px; margin-right:7px; border-radius:4px;}
+    .toolbar select { border:1px solid #ccc;}
+    .toolbar button { background:#007bff;color:white; border:none;}
+    .toolbar button:hover {background:#0056b3;}
+    .scroll-wrap { overflow:auto; }
+    table { border-collapse: collapse; width:100%; font-size:14.5px; min-width:1700px;}
+    th, td { border:1px solid #c4cce2; padding:9px 7px;}
+    th { font-weight:700; background:#f3f7fd;}
+    tr:nth-child(even) { background:#f6fafe;}
+    .zip-btn {padding:6px 13px;background:#48a95e;color:#fff;border:none;border-radius:4px;font-size:13px;cursor:pointer;}
+    .zip-btn:hover {background:#25663b;}
+    @media (max-width:900px) { table {font-size:13px;} }
+  </style>
+</head>
+<body>
+  <h1>Admin Dashboard – Student Masterlist</h1>
+
+  <div class="toolbar">
+    <select id="filterClass">
+      <option value="">Class (All)</option>
+      <option>BA</option><option>BCom</option><option>BSc Maths</option>
+      <option>BSc Bio</option><option>BSc Physical Education</option>
+      <option>LLB</option><option>MA</option><option>MSc</option><option>MCom</option>
+    </select>
+    <select id="filterYear">
+      <option value="">Year (All)</option>
+      <option>1st</option><option>2nd</option><option>3rd</option>
+    </select>
+    <select id="filterFormType">
+      <option value="">Form Type (All)</option>
+      <option>New</option><option>Renew</option>
+    </select>
+    <button onclick="applyFilters()">Apply Filters</button>
+    <button onclick="clearFilters()">Clear</button>
+    <button onclick="exportTableToExcel()">Export Excel</button>
+  </div>
+
+  <div class="scroll-wrap">
+    <table id="studentsTable">
+      <thead>
+        <tr>
+          <!-- Basic Info -->
+          <th>Class</th> <th>Subject</th> <th>Year</th> <th>Form Type</th> <th>Reason</th>
+          <th>Name</th> <th>Scholarship No.</th> <th>Father</th> <th>Mother</th>
+          <th>Category</th> <th>Mobile</th>
+          <th>Admission Date (1st Yr)</th> <th>Admission Date (Current Yr)</th>
+          <th>Enrollment/Reg No.</th> <th>Attendance</th>
+          <!-- Academic and all other fields ... -->
+          <th>Intermediate Board</th><th>Intermediate Passing Year</th>
+          <th>Intermediate Total Marks</th><th>Intermediate Obtained</th>
+          <th>Graduation Univ.</th><th>Grad. Total Marks</th><th>Grad. Obtained</th>
+          <th>1st Year Marks</th><th>1st Year Total</th><th>2nd Year Marks</th><th>2nd Year Total</th>
+          <th>Sem 1 Marks</th><th>Sem 1 Total</th><th>Sem 1 Result</th>
+          <th>Sem 2 Marks</th><th>Sem 2 Total</th><th>Sem 2 Result</th>
+          <th>Sem 3 Marks</th><th>Sem 3 Total</th><th>Sem 3 Result</th>
+          <th>Sem 4 Marks</th><th>Sem 4 Total</th><th>Sem 4 Result</th>
+          <th>PG 1st Sem Marks</th><th>PG 1st Sem Total</th>
+          <th>PG 2nd Sem Marks</th><th>PG 2nd Sem Total</th>
+          <th>PG 3rd Sem Marks</th><th>PG 3rd Sem Total</th>
+          <th>PG 4th Sem Marks</th><th>PG 4th Sem Total</th>
+          <th>Income Cert No.</th><th>Issue Date</th><th>Annual Income</th>
+          <th>Sibling Applying</th><th>Sibling Scholarship No.</th><th>Sibling College</th>
+          <th>Documents (ZIP)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>MA</td><td>English</td><td>1st</td><td>New</td><td></td>
+          <td>Aarti Singh</td><td>MC-11246</td><td>Kamal</td><td>Neera</td><td>OBC</td>
+          <td>9876543210</td><td>2025-08-01</td><td>2025-08-01</td><td>PG/CCS/2025-71</td><td>Yes</td>
+          <td></td><td></td><td></td><td></td>
+          <td>CCSUK</td><td>800</td><td>711</td>
+          <td></td><td></td><td></td><td></td>
+          <td>190</td><td>200</td><td>Yes</td>
+          <td>183</td><td>200</td><td>Yes</td>
+          <td>195</td><td>200</td><td>Yes</td>
+          <td>192</td><td>200</td><td>Yes</td>
+          <td>190</td><td>200</td><td>183</td><td>200</td><td>180</td><td>200</td><td>178</td><td>200</td>
+          <td>PJ-88211</td><td>2025-03-09</td><td>74000</td>
+          <td>No</td><td></td><td></td>
+          <td>
+            <button class="zip-btn" onclick="downloadStudentDocsZip('MC-11246')">Download ZIP</button>
+          </td>
+        </tr>
+        <!-- More rows, use Firestore or DB values for real students -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Excel Export
+    function exportTableToExcel() {
+      const table = document.getElementById('studentsTable');
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.table_to_sheet(table);
+      XLSX.utils.book_append_sheet(wb, ws, 'Students');
+      XLSX.writeFile(wb, 'students_export.xlsx');
+    }
+
+    // Static table filters
+    function applyFilters() {
+      const classFilter = document.getElementById('filterClass').value;
+      const yearFilter = document.getElementById('filterYear').value;
+      const formTypeFilter = document.getElementById('filterFormType').value;
+      const rows = document.querySelectorAll('#studentsTable tbody tr');
+      rows.forEach(row => {
+        const classVal = row.cells[0].innerText.trim();
+        const yearVal = row.cells[2].innerText.trim();
+        const formTypeVal = row.cells[3].innerText.trim();
+        const show = (!classFilter || classVal === classFilter) && (!yearFilter || yearVal === yearFilter) && (!formTypeFilter || formTypeVal === formTypeFilter);
+        row.style.display = show ? '' : 'none';
+      });
+    }
+    function clearFilters() {
+      document.getElementById('filterClass').value = '';
+      document.getElementById('filterYear').value = '';
+      document.getElementById('filterFormType').value = '';
+      applyFilters();
+    }
+
+    // ------ Document ZIP Download Logic ------
+    async function downloadStudentDocsZip(studentId) {
+      // Dummy document field --> storagePath mapping (edit as per your storage logic)
+      const docList = [
+        { name: 'HighSchoolMarksheet.pdf', storagePath: `students/${studentId}/documents/highschool.pdf` },
+        { name: 'IntermediateMarksheet.pdf', storagePath: `students/${studentId}/documents/intermediate.pdf` },
+        { name: 'IncomeCertificate.pdf', storagePath: `students/${studentId}/documents/income_certificate.pdf` },
+        { name: 'GraduationMarksheet.pdf', storagePath: `students/${studentId}/documents/graduation.pdf` },
+        { name: 'Aadhaar.pdf', storagePath: `students/${studentId}/documents/aadhaar.pdf` },
+        // + add more fields as required per form design!
+      ];
+      const zip = new JSZip();
+      try {
+        for(const doc of docList) {
+          try {
+            // Use your real storage (Firebase Storage, S3, etc.) logic here:
+            const url = await getFileDownloadURL(doc.storagePath);
+            if(url) {
+              const resp = await fetch(url);
+              if(!resp.ok) throw new Error();
+              const blob = await resp.blob();
+              zip.file(doc.name, blob);
+            }
+          } catch {
+            // If not present, just skip (admin still gets whatever is available in ZIP)
+          }
+        }
+        const blob = await zip.generateAsync({type:"blob"});
+        saveAs(blob, `${studentId}_documents.zip`);
+      } catch (err) {
+        alert("Error while creating ZIP. Contact IT.");
+      }
+    }
+    // Replace this with your actual backend logic
+    async function getFileDownloadURL(storagePath) {
+      // Firebase Storage example:
+      // return firebase.storage().ref(storagePath).getDownloadURL();
+      // For demo only (no actual download): return dummy file (zip will be empty)
+      return null; // Return null to simulate no real files in demo, replace for prod
+    }
+  </script>
+</body>
+</html>

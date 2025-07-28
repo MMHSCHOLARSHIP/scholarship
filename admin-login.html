@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Login</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff; /* Background ab pure white hai */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .login-container {
+      background: rgba(90, 133, 255, 0.07); /* halka blue overlay, optional, pure white chahiye toh isko hata dein */
+      padding: 40px 50px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      text-align: center;
+      color: #333;
+      width: 320px;
+    }
+    h2 {
+      margin-bottom: 25px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+    }
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 10px;
+      margin: 15px 0 25px 0;
+      border: 1px solid #ccd6f6;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: #f7f8fa;
+    }
+    button {
+      background-color: #2575fc;
+      border: none;
+      color: white;
+      padding: 12px 0;
+      width: 100%;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #1f5fd6;
+    }
+    .error-msg {
+      color: #ff6b6b;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Admin Login</h2>
+    <form id="loginForm">
+      <input type="password" id="adminPassword" placeholder="Enter Admin Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div id="errorMsg" class="error-msg"></div>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const ADMIN_PASSWORD = "019";
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const enteredPwd = document.getElementById('adminPassword').value.trim();
+      if(enteredPwd === ADMIN_PASSWORD) {
+        window.location.href = "admin-dashboard.html";
+      } else {
+        errorMsg.textContent = "Invalid password. Try again.";
+      }
+    });
+  </script>
+</body>
+</html>

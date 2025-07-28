@@ -1,105 +1,91 @@
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to right, #e0c3fc, #8ec5fc);
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.dashboard-container {
+.login-container {
+  width: 800px;
+  height: auto;
   display: flex;
-  width: 1000px;
-  max-width: 100%;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  border-radius: 14px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
   overflow: hidden;
-  background-color: white;
+  background-color: #fff;
 }
 
 .left-panel {
-  background: linear-gradient(135deg, #004d66, #006b8f);
+  width: 40%;
+  background-color: #00796b;
   color: white;
-  padding: 40px 20px;
-  width: 35%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 .left-panel .logo {
-  width: 90px;
-  margin-bottom: 20px;
+  width: 80px;
+  height: auto;
+  margin-bottom: 15px;
 }
 
 .left-panel h2 {
+  font-size: 16px;
   text-align: center;
-  font-size: 22px;
-  line-height: 1.4;
 }
 
 .right-panel {
-  padding: 40px 30px;
-  width: 65%;
-  background-color: #f7f9fc;
-  overflow-y: auto;
-  max-height: 90vh;
+  width: 60%;
+  padding: 40px;
+  box-sizing: border-box;
 }
 
 .right-panel h2 {
-  margin-bottom: 25px;
-  color: #333;
-  font-weight: 600;
-  font-size: 24px;
+  margin-bottom: 30px;
+  color: #00796b;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-form input,
-form select {
+form input, form select {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  transition: all 0.3s ease;
-  font-family: 'Poppins', sans-serif;
-}
-
-form input:focus,
-form select:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 6px #007bff77;
-  outline: none;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-bottom: 1px solid #aaa;
+  font-size: 16px;
+  background-color: white;
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  background-color: #007bff;
-  color: white;
+  padding: 10px;
+  background-color: transparent;
+  border: 2px solid #00796b;
+  color: #00796b;
+  border-radius: 25px;
   font-size: 16px;
-  border: none;
-  border-radius: 6px;
   cursor: pointer;
-  font-weight: 600;
-  transition: 0.3s ease;
+  transition: 0.3s;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #00796b;
+  color: white;
 }
 
-.form-row {
-  display: flex;
-  gap: 15px;
+.register {
+  margin-top: 20px;
+  font-size: 14px;
 }
 
-.form-row select {
-  flex: 1;
+.register a {
+  color: #00796b;
+  text-decoration: none;
 }
+
+
